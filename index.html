@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webkitten | €1 per page</title>
+    <title>Webkitten | €1 Per Page</title>
     <style>
+        /* --- ORANGE THEME --- */
         :root {
             --primary-orange: #ff6700;
             --dark-orange: #e65c00;
-            --light-orange: #fff3e6;
+            --soft-orange: #fff3e6;
             --white: #ffffff;
-            --text-dark: #2d2d2d;
+            --text: #2d2d2d;
         }
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--light-orange);
-            color: var(--text-dark);
+            background-color: var(--soft-orange);
+            color: var(--text);
             margin: 0;
             padding: 20px;
             display: flex;
@@ -29,108 +30,113 @@
 
         .container {
             background-color: var(--white);
-            padding: 40px 30px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(255, 103, 0, 0.15);
-            max-width: 500px;
-            width: 95%;
-            border-top: 8px solid var(--primary-orange);
+            padding: 50px 30px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(255, 103, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            border-top: 10px solid var(--primary-orange);
         }
 
         h1 {
             color: var(--primary-orange);
-            font-size: 2.8rem;
+            font-size: 3rem;
             margin: 0 0 10px 0;
+            font-weight: 900;
         }
 
-        p {
-            line-height: 1.6;
-            margin-bottom: 25px;
-            font-size: 1.1rem;
-        }
-
-        .calculator {
-            background: #fdf2e9;
-            padding: 25px;
-            border-radius: 15px;
+        .subtitle {
+            font-size: 1.2rem;
             margin-bottom: 30px;
-            border: 1px solid #ffe0b2;
+            color: #555;
+        }
+
+        /* --- CALCULATOR SECTION --- */
+        .calculator {
+            background: #fffbf5;
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px solid #ffe0b2;
+            margin-bottom: 30px;
         }
 
         label {
             display: block;
             font-weight: bold;
-            margin-bottom: 12px;
-            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         input[type="number"] {
-            width: 90px;
+            width: 100px;
             padding: 12px;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             border: 3px solid var(--primary-orange);
-            border-radius: 12px;
+            border-radius: 15px;
             text-align: center;
             outline: none;
-            transition: border-color 0.2s;
+            color: var(--dark-orange);
+            font-weight: bold;
         }
 
-        input[type="number"]:focus {
-            border-color: var(--dark-orange);
-        }
-
-        .price-display {
-            font-size: 2.2rem;
+        .total-price {
+            display: block;
+            font-size: 2.5rem;
             font-weight: 900;
             color: var(--dark-orange);
             margin-top: 20px;
-            display: block;
         }
 
+        /* --- BUTTON --- */
         .cta-button {
             background-color: var(--primary-orange);
             color: var(--white);
             text-decoration: none;
-            padding: 18px 40px;
-            font-size: 1.3rem;
+            padding: 20px 40px;
+            font-size: 1.4rem;
             font-weight: bold;
             border-radius: 50px;
             transition: all 0.3s ease;
             display: inline-block;
-            box-shadow: 0 6px 15px rgba(255, 103, 0, 0.3);
-            width: 80%;
+            box-shadow: 0 8px 20px rgba(255, 103, 0, 0.3);
+            width: 85%;
         }
 
         .cta-button:hover {
             background-color: var(--dark-orange);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 103, 0, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(255, 103, 0, 0.4);
         }
 
         .footer {
             margin-top: 40px;
             font-size: 0.9rem;
-            color: #888;
+            color: #999;
+            letter-spacing: 0.5px;
         }
 
-        .paw { color: var(--primary-orange); }
+        .paw-icon {
+            color: var(--primary-orange);
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Webkitten <span class="paw">🐾</span></h1>
-        <p>Simple, modern websites for only <strong>€1 per page</strong>.</p>
+        <h1>Webkitten <span class="paw-icon">🐾</span></h1>
+        <p class="subtitle">Get your dream website for only €1 per page!</p>
         
         <div class="calculator">
-            <label for="pages">How many pages?</label>
-            <input type="number" id="pages" value="1" min="1" oninput="calculatePrice()">
+            <label for="pageInput">Number of pages:</label>
+            <input type="number" id="pageInput" value="1" min="1" oninput="updatePrice()">
             
-            <span class="price-display" id="totalPrice">Total: €1</span>
+            <div class="total-price" id="displayPrice">Total: €1</div>
         </div>
 
-        <a href="#" id="mailButton" class="cta-button">
-            Request My Website
+        <a href="#" id="orderBtn" class="cta-button">
+            Order Now
         </a>
     </div>
 
@@ -139,40 +145,40 @@
     </div>
 
     <script>
-        function calculatePrice() {
-            const pagesInput = document.getElementById('pages');
-            const priceDisplay = document.getElementById('totalPrice');
-            const mailButton = document.getElementById('mailButton');
+        function updatePrice() {
+            const input = document.getElementById('pageInput');
+            const display = document.getElementById('displayPrice');
+            const btn = document.getElementById('orderBtn');
             
-            let pages = pagesInput.value;
+            let val = input.value;
             
-            // Zorg dat het minimaal 1 blijft
-            if (pages < 1 && pages !== "") {
-                pages = 1;
-                pagesInput.value = 1;
+            // Zorg dat het getal niet onder de 1 komt
+            if (val < 1 && val !== "") {
+                val = 1;
+                input.value = 1;
             }
+
+            // Berekening: 1 euro per pagina
+            const total = val * 1;
             
-            // Prijs is nu 1 euro per pagina
-            const total = pages * 1;
+            // Update display
+            display.innerText = "Total: €" + (val === "" ? "0" : total);
             
-            // Update de prijs op het scherm
-            priceDisplay.innerText = "Total: €" + (pages === "" ? "0" : total);
-            
-            // Update de e-mail link
+            // Update Mail Link
             const email = "littendekitten@gmail.com";
-            const subject = encodeURIComponent("Webkitten Order: " + pages + " page(s)");
+            const subject = encodeURIComponent("Webkitten Order: " + val + " page(s)");
             const body = encodeURIComponent(
-                "Hi Webkitten!\n\n" +
-                "I would like to order a website with " + pages + " page(s).\n" +
-                "Total price: €" + total + ".\n\n" +
-                "My ideas for the site:\n[Write your ideas here]"
+                "Hello Webkitten!\n\n" +
+                "I would like to order a website with " + val + " page(s).\n" +
+                "The total price is €" + total + ".\n\n" +
+                "Here is my idea for the website:\n[Type your ideas here]"
             );
             
-            mailButton.href = "mailto:" + email + "?subject=" + subject + "&body=" + body;
+            btn.href = "mailto:" + email + "?subject=" + subject + "&body=" + body;
         }
 
-        // Activeer direct bij het laden
-        calculatePrice();
+        // Run direct om de knop te activeren bij het laden
+        updatePrice();
     </script>
 
 </body>
