@@ -4,26 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webkitten | Your website for €2</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- ORANGE THEME STYLE --- */
+        :root {
+            --primary-orange: #ff6700;
+            --dark-orange: #e65c00;
+            --light-orange: #fff3e6;
+            --white: #ffffff;
+            --text-dark: #2d2d2d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--light-orange);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            background-color: var(--white);
+            padding: 50px 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(255, 103, 0, 0.15);
+            max-width: 550px;
+            width: 90%;
+            border-top: 8px solid var(--primary-orange);
+        }
+
+        h1 {
+            color: var(--primary-orange);
+            font-size: 3rem;
+            margin: 0 0 10px 0;
+            letter-spacing: -1px;
+        }
+
+        .price-badge {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--white);
+            background: var(--primary-orange);
+            padding: 8px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(255, 103, 0, 0.3);
+        }
+
+        p {
+            line-height: 1.8;
+            font-size: 1.15rem;
+            margin-bottom: 35px;
+            color: #444;
+        }
+
+        .cta-button {
+            background-color: var(--primary-orange);
+            color: var(--white);
+            text-decoration: none;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 6px 15px rgba(255, 103, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            background-color: var(--dark-orange);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 103, 0, 0.4);
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #888;
+            font-weight: 500;
+        }
+
+        .paw {
+            color: var(--primary-orange);
+        }
+    </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Webkitten 🐾</h1>
-        <div class="price">Your own website for only €2!</div>
+        <h1>Webkitten <span class="paw">🐾</span></h1>
+        <div class="price-badge">Get your website for just €2</div>
         
         <p>
-            Need a website for your hobby, a project, or just for fun, but don't know where to start? 
-            Don't worry! I will build a simple, beautiful website for you. Fast, affordable, and exactly how you want it.
+            Need a simple, professional, and cool website for your hobby or project? 
+            Don't overpay! I will build your custom page for only 2 euros. 
+            Fast delivery and high quality guaranteed.
         </p>
 
-        <a href="mailto:littendekitten@gmail.com?subject=I%20would%20like%20a%20Webkitten%20website!&body=Hi%20Webkitten!%0D%0A%0D%0AI%20would%20like%20a%20website%20for%202%20euros.%0D%0A%0D%0AHere%20is%20my%20idea:%0D%0A[Briefly%20tell%20me%20what%20you%20want%20on%20your%20website]%0D%0A%0D%0AKind%20regards," class="cta-button">
-            Request your website!
+        <a href="mailto:littendekitten@gmail.com?subject=I%20want%20a%20Webkitten%20website&body=Hi%20Webkitten!%0D%0A%0D%0AI%20would%20like%20to%20order%20a%20website%20for%202%20euro.%0D%0A%0D%0AMy%20idea%20is:%0D%0A[Describe%20your%20site%20here]" class="cta-button">
+            Order Your Website Now
         </a>
     </div>
 
     <div class="footer">
-        &copy; 2026 Webkitten. Made with ❤️.
+        &copy; 2026 Webkitten. All rights reserved.
     </div>
 
 </body>
