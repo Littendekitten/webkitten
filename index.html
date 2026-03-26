@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webkitten | Your website for €2</title>
+    <title>Webkitten | Order Your Website</title>
     <style>
-        /* --- ORANGE THEME STYLE --- */
         :root {
             --primary-orange: #ff6700;
             --dark-orange: #e65c00;
@@ -19,7 +18,7 @@
             background-color: var(--light-orange);
             color: var(--text-dark);
             margin: 0;
-            padding: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -30,38 +29,56 @@
 
         .container {
             background-color: var(--white);
-            padding: 50px 30px;
+            padding: 40px 30px;
             border-radius: 25px;
             box-shadow: 0 15px 35px rgba(255, 103, 0, 0.15);
-            max-width: 550px;
-            width: 90%;
+            max-width: 500px;
+            width: 95%;
             border-top: 8px solid var(--primary-orange);
         }
 
         h1 {
             color: var(--primary-orange);
-            font-size: 3rem;
+            font-size: 2.8rem;
             margin: 0 0 10px 0;
-            letter-spacing: -1px;
-        }
-
-        .price-badge {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--white);
-            background: var(--primary-orange);
-            padding: 8px 20px;
-            border-radius: 50px;
-            display: inline-block;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 10px rgba(255, 103, 0, 0.3);
         }
 
         p {
-            line-height: 1.8;
-            font-size: 1.15rem;
-            margin-bottom: 35px;
-            color: #444;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* Calculator styling */
+        .calculator {
+            background: #fdf2e9;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 10px;
+            font-size: 1.2rem;
+            border: 2px solid var(--primary-orange);
+            border-radius: 10px;
+            text-align: center;
+            outline: none;
+        }
+
+        .price-display {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark-orange);
+            margin-top: 15px;
+            display: block;
         }
 
         .cta-button {
@@ -69,52 +86,81 @@
             color: var(--white);
             text-decoration: none;
             padding: 18px 40px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
             border-radius: 50px;
             transition: all 0.3s ease;
             display: inline-block;
             box-shadow: 0 6px 15px rgba(255, 103, 0, 0.3);
+            width: 80%;
         }
 
         .cta-button:hover {
             background-color: var(--dark-orange);
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 103, 0, 0.4);
         }
 
         .footer {
             margin-top: 40px;
             font-size: 0.9rem;
             color: #888;
-            font-weight: 500;
         }
 
-        .paw {
-            color: var(--primary-orange);
-        }
+        .paw { color: var(--primary-orange); }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>Webkitten <span class="paw">🐾</span></h1>
-        <div class="price-badge">Get your website for just €2</div>
+        <p>Affordable websites for your hobby or project. <br>Simple, fast, and orange!</p>
         
-        <p>
-            Need a simple, professional, and cool website for your hobby or project? 
-            Don't overpay! I will build your custom page for only 2 euros. 
-            Fast delivery and high quality guaranteed.
-        </p>
+        <div class="calculator">
+            <label for="pages">How many pages do you need?</label>
+            <input type="number" id="pages" value="1" min="1" oninput="calculatePrice()">
+            
+            <span class="price-display" id="totalPrice">Total: €2</span>
+        </div>
 
-        <a href="mailto:littendekitten@gmail.com?subject=I%20want%20a%20Webkitten%20website&body=Hi%20Webkitten!%0D%0A%0D%0AI%20would%20like%20to%20order%20a%20website%20for%202%20euro.%0D%0A%0D%0AMy%20idea%20is:%0D%0A[Describe%20your%20site%20here]" class="cta-button">
-            Order Your Website Now
+        <a href="#" id="mailButton" class="cta-button">
+            Request Website
         </a>
     </div>
 
     <div class="footer">
         &copy; 2026 Webkitten. All rights reserved.
     </div>
+
+    <script>
+        function calculatePrice() {
+            const pagesInput = document.getElementById('pages');
+            const priceDisplay = document.getElementById('totalPrice');
+            const mailButton = document.getElementById('mailButton');
+            
+            let pages = pagesInput.value;
+            if (pages < 1) pages = 1; // Voorkom 0 of negatieve pagina's
+            
+            const total = pages * 2;
+            
+            // Update de tekst op de website
+            priceDisplay.innerText = "Total: €" + total;
+            
+            // Update de e-mail link automatisch
+            const email = "littendekitten@gmail.com";
+            const subject = encodeURIComponent("I want a Webkitten website");
+            const body = encodeURIComponent(
+                "Hi Webkitten!\n\n" +
+                "I would like to order a website with " + pages + " page(s).\n" +
+                "The estimated total price is €" + total + ".\n\n" +
+                "My idea for the site is:\n[Describe your site here]"
+            );
+            
+            mailButton.href = "mailto:" + email + "?subject=" + subject + "&body=" + body;
+        }
+
+        // Voer de functie 1 keer uit bij het laden zodat de knop direct werkt
+        calculatePrice();
+    </script>
 
 </body>
 </html>
