@@ -11,6 +11,7 @@
             --soft-orange: #fff3e6;
             --white: #ffffff;
             --text: #2d2d2d;
+            --gray: #94a3b8;
         }
 
         body {
@@ -29,7 +30,7 @@
 
         .container {
             background-color: var(--white);
-            padding: 50px 30px;
+            padding: 40px 30px;
             border-radius: 30px;
             box-shadow: 0 20px 40px rgba(255, 103, 0, 0.1);
             max-width: 450px;
@@ -46,7 +47,7 @@
 
         .subtitle {
             font-size: 1.1rem;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             color: #555;
         }
 
@@ -55,68 +56,90 @@
             padding: 25px;
             border-radius: 20px;
             border: 2px solid #ffe0b2;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            text-align: left;
         }
 
         label {
             display: block;
             font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 1rem;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: var(--dark-orange);
         }
 
         input[type="number"] {
-            width: 100px;
-            padding: 12px;
-            font-size: 1.5rem;
-            border: 3px solid var(--primary-orange);
-            border-radius: 15px;
+            width: 80px;
+            padding: 10px;
+            font-size: 1.2rem;
+            border: 2px solid var(--primary-orange);
+            border-radius: 12px;
             text-align: center;
             outline: none;
-            color: var(--dark-orange);
             font-weight: bold;
+            margin-bottom: 20px;
         }
 
-        /* Haalt de pijltjes weg in sommige browsers voor een cleaner design */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 12px;
+            border: 2px solid var(--primary-orange);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: none;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        textarea:focus {
+            border-color: var(--dark-orange);
+            background-color: #fff;
         }
 
         .max-note {
-            display: block;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #cc5200;
-            margin-top: 8px;
             font-weight: 600;
+            margin-left: 10px;
         }
 
         .total-price {
             display: block;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 900;
             color: var(--dark-orange);
-            margin-top: 20px;
+            margin-top: 15px;
+            text-align: center;
         }
 
         .cta-button {
             background-color: var(--primary-orange);
             color: var(--white);
             text-decoration: none;
-            padding: 20px 40px;
-            font-size: 1.4rem;
+            padding: 18px 40px;
+            font-size: 1.3rem;
             font-weight: bold;
             border-radius: 50px;
             transition: all 0.3s ease;
             display: inline-block;
             box-shadow: 0 8px 20px rgba(255, 103, 0, 0.3);
             width: 85%;
+            cursor: pointer;
         }
 
-        .cta-button:hover {
+        /* Styling voor als de knop uitstaat */
+        .cta-button.disabled {
+            background-color: var(--gray);
+            box-shadow: none;
+            opacity: 0.6;
+            pointer-events: none; /* Maakt de link onklikbaar */
+        }
+
+        .cta-button:not(.disabled):hover {
             background-color: var(--dark-orange);
             transform: translateY(-4px);
             box-shadow: 0 12px 25px rgba(255, 103, 0, 0.4);
@@ -138,16 +161,19 @@
         <p class="subtitle">Custom websites for just <strong>€2 per page</strong>.</p>
         
         <div class="calculator">
-            <label for="pageInput">How many pages?</label>
+            <label for="pageInput">1. How many pages?</label>
             <input type="number" id="pageInput" value="1" min="1" max="10" 
                    onkeydown="return ['e', 'E', '+', '-', '.', ','].includes(event.key) ? false : true"
                    oninput="updatePrice()">
-            <span class="max-note">(Maximum 10 pages)</span>
+            <span class="max-note">(Max 10)</span>
+
+            <label for="projectDescription">2. Describe your project:</label>
+            <textarea id="projectDescription" placeholder="What is your website about?" oninput="updatePrice()"></textarea>
             
             <div class="total-price" id="displayPrice">Total: €2</div>
         </div>
 
-        <a href="#" id="orderBtn" class="cta-button">
+        <a href="#" id="orderBtn" class="cta-button disabled">
             Request Website
         </a>
     </div>
@@ -158,39 +184,48 @@
 
     <script>
         function updatePrice() {
-            const input = document.getElementById('pageInput');
+            const pageInput = document.getElementById('pageInput');
+            const descInput = document.getElementById('projectDescription');
             const display = document.getElementById('displayPrice');
             const btn = document.getElementById('orderBtn');
             
-            let val = input.value;
+            let pages = pageInput.value;
+            let description = descInput.value;
             
-            // Limit check: min 1, max 10
-            if (val > 10) {
-                val = 10;
-                input.value = 10;
-            } else if (val < 1 && val !== "") {
-                val = 1;
-                input.value = 1;
+            // Limit check
+            if (pages > 10) {
+                pages = 10;
+                pageInput.value = 10;
+            } else if (pages < 1 && pages !== "") {
+                pages = 1;
+                pageInput.value = 1;
             }
 
-            // Calculation: 2 euro per page
-            const total = val * 2;
-            display.innerText = "Total: €" + (val === "" ? "0" : total);
+            // Update Prijs
+            const total = pages * 2;
+            display.innerText = "Total: €" + (pages === "" ? "0" : total);
             
-            // Email link setup
-            const email = "littendekitten@gmail.com";
-            const subject = encodeURIComponent("Webkitten Order: " + val + " page(s)");
-            const body = encodeURIComponent(
-                "Hello Webkitten!\n\n" +
-                "I would like to order a website with " + val + " page(s).\n" +
-                "The total price is €" + total + ".\n\n" +
-                "Ideas for my website:\n[Please describe your site here]"
-            );
-            
-            btn.href = "mailto:" + email + "?subject=" + subject + "&body=" + body;
+            // Controleer of er tekst is ingevuld
+            if (description.trim().length > 5) { // Minimaal 5 tekens
+                btn.classList.remove('disabled');
+                
+                // Mail link setup
+                const email = "littendekitten@gmail.com";
+                const subject = encodeURIComponent("Webkitten Order: " + pages + " page(s)");
+                const body = encodeURIComponent(
+                    "Hello Webkitten!\n\n" +
+                    "I would like to order a website with " + pages + " page(s).\n" +
+                    "Total price: €" + total + ".\n\n" +
+                    "Project Idea:\n" + description
+                );
+                btn.href = "mailto:" + email + "?subject=" + subject + "&body=" + body;
+            } else {
+                btn.classList.add('disabled');
+                btn.href = "#";
+            }
         }
 
-        // Initialize on load
+        // Init op load
         updatePrice();
     </script>
 
