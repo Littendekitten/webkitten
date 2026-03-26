@@ -1,1 +1,76 @@
+:root {
+    /* Oranje kleurenthema */
+    --primary-color: #ff7f50; /* Mooie, zachte koraal-oranje kleur */
+    --primary-hover: #ff5722; /* Iets donkerder oranje voor als je over de knop gaat */
+    --background-color: #fff3e0; /* Een hele lichte oranje/perzik achtergrond */
+    --text-color: #333333;
+}
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(255, 127, 80, 0.15); /* Subtiele oranje schaduw */
+    max-width: 500px;
+    width: 90%;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e65100;
+    background: #ffe0b2;
+    padding: 5px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    margin: 15px 0;
+}
+
+p {
+    line-height: 1.6;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 30px;
+    transition: transform 0.2s, background-color 0.2s;
+    display: inline-block;
+}
+
+.cta-button:hover {
+    background-color: var(--primary-hover);
+    transform: scale(1.05);
+}
+
+.footer {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: #777;
+}
