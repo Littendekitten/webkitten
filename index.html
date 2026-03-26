@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webkitten | Jouw website voor €2</title>
+    <style>
+        :root {
+            --primary-color: #ff8fab;
+            --background-color: #fff0f3;
+            --text-color: #333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
 
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff4d6d;
+            background: #ffe5ec;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 15px 0;
+        }
+
+        p {
+            line-height: 1.6;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: transform 0.2s, background-color 0.2s;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background-color: #ff4d6d;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Webkitten 🐾</h1>
+        <div class="price">Een eigen website voor maar €2!</div>
+        
+        <p>
+            Heb je een website nodig voor je hobby, een project of gewoon voor de lol, maar weet je niet hoe je moet beginnen? 
+            Geen zorgen! Ik bouw een simpele, mooie website voor jou. Snel, goedkoop en precies zoals jij het wilt.
+        </p>
+
+        <a href="mailto:jouw-email@hier.nl?subject=Ik wil graag een Webkitten website!&body=Hoi Webkitten!%0D%0A%0D%0AIk wil graag een website voor 2 euro.%0D%0A%0D%0ADit is mijn idee:%0D%0A[Vertel hier kort wat je op je website wilt hebben]%0D%0A%0D%0AGroetjes," class="cta-button">
+            Vraag je website aan!
+        </a>
+    </div>
+
+    <div class="footer">
+        &copy; 2026 Webkitten. Gemaakt met ❤️.
+    </div>
+
+</body>
+</html>
