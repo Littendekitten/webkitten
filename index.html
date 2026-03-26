@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webkitten | Order Your Website</title>
+    <title>Webkitten | €1 per page</title>
     <style>
         :root {
             --primary-orange: #ff6700;
@@ -46,38 +46,44 @@
         p {
             line-height: 1.6;
             margin-bottom: 25px;
+            font-size: 1.1rem;
         }
 
-        /* Calculator styling */
         .calculator {
             background: #fdf2e9;
-            padding: 20px;
+            padding: 25px;
             border-radius: 15px;
             margin-bottom: 30px;
+            border: 1px solid #ffe0b2;
         }
 
         label {
             display: block;
             font-weight: bold;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
         }
 
         input[type="number"] {
-            width: 80px;
-            padding: 10px;
-            font-size: 1.2rem;
-            border: 2px solid var(--primary-orange);
-            border-radius: 10px;
+            width: 90px;
+            padding: 12px;
+            font-size: 1.3rem;
+            border: 3px solid var(--primary-orange);
+            border-radius: 12px;
             text-align: center;
             outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--dark-orange);
         }
 
         .price-display {
-            font-size: 2rem;
-            font-weight: 800;
+            font-size: 2.2rem;
+            font-weight: 900;
             color: var(--dark-orange);
-            margin-top: 15px;
+            margin-top: 20px;
             display: block;
         }
 
@@ -86,7 +92,7 @@
             color: var(--white);
             text-decoration: none;
             padding: 18px 40px;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
             border-radius: 50px;
             transition: all 0.3s ease;
@@ -98,6 +104,7 @@
         .cta-button:hover {
             background-color: var(--dark-orange);
             transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 103, 0, 0.4);
         }
 
         .footer {
@@ -113,17 +120,17 @@
 
     <div class="container">
         <h1>Webkitten <span class="paw">🐾</span></h1>
-        <p>Affordable websites for your hobby or project. <br>Simple, fast, and orange!</p>
+        <p>Simple, modern websites for only <strong>€1 per page</strong>.</p>
         
         <div class="calculator">
-            <label for="pages">How many pages do you need?</label>
+            <label for="pages">How many pages?</label>
             <input type="number" id="pages" value="1" min="1" oninput="calculatePrice()">
             
-            <span class="price-display" id="totalPrice">Total: €2</span>
+            <span class="price-display" id="totalPrice">Total: €1</span>
         </div>
 
         <a href="#" id="mailButton" class="cta-button">
-            Request Website
+            Request My Website
         </a>
     </div>
 
@@ -138,27 +145,33 @@
             const mailButton = document.getElementById('mailButton');
             
             let pages = pagesInput.value;
-            if (pages < 1) pages = 1; // Voorkom 0 of negatieve pagina's
             
-            const total = pages * 2;
+            // Zorg dat het minimaal 1 blijft
+            if (pages < 1 && pages !== "") {
+                pages = 1;
+                pagesInput.value = 1;
+            }
             
-            // Update de tekst op de website
-            priceDisplay.innerText = "Total: €" + total;
+            // Prijs is nu 1 euro per pagina
+            const total = pages * 1;
             
-            // Update de e-mail link automatisch
+            // Update de prijs op het scherm
+            priceDisplay.innerText = "Total: €" + (pages === "" ? "0" : total);
+            
+            // Update de e-mail link
             const email = "littendekitten@gmail.com";
-            const subject = encodeURIComponent("I want a Webkitten website");
+            const subject = encodeURIComponent("Webkitten Order: " + pages + " page(s)");
             const body = encodeURIComponent(
                 "Hi Webkitten!\n\n" +
                 "I would like to order a website with " + pages + " page(s).\n" +
-                "The estimated total price is €" + total + ".\n\n" +
-                "My idea for the site is:\n[Describe your site here]"
+                "Total price: €" + total + ".\n\n" +
+                "My ideas for the site:\n[Write your ideas here]"
             );
             
             mailButton.href = "mailto:" + email + "?subject=" + subject + "&body=" + body;
         }
 
-        // Voer de functie 1 keer uit bij het laden zodat de knop direct werkt
+        // Activeer direct bij het laden
         calculatePrice();
     </script>
 
