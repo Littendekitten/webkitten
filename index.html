@@ -79,6 +79,13 @@
             font-weight: bold;
         }
 
+        /* Haalt de pijltjes weg in sommige browsers voor een cleaner design */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
         .max-note {
             display: block;
             font-size: 0.85rem;
@@ -132,7 +139,9 @@
         
         <div class="calculator">
             <label for="pageInput">How many pages?</label>
-            <input type="number" id="pageInput" value="1" min="1" max="10" oninput="updatePrice()">
+            <input type="number" id="pageInput" value="1" min="1" max="10" 
+                   onkeydown="return ['e', 'E', '+', '-', '.', ','].includes(event.key) ? false : true"
+                   oninput="updatePrice()">
             <span class="max-note">(Maximum 10 pages)</span>
             
             <div class="total-price" id="displayPrice">Total: €2</div>
