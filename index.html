@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webkitten | €1 Per Page</title>
     <style>
-        /* --- ORANGE THEME --- */
         :root {
             --primary-orange: #ff6700;
             --dark-orange: #e65c00;
@@ -46,12 +45,11 @@
         }
 
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 30px;
             color: #555;
         }
 
-        /* --- CALCULATOR SECTION --- */
         .calculator {
             background: #fffbf5;
             padding: 25px;
@@ -64,7 +62,7 @@
             display: block;
             font-weight: bold;
             margin-bottom: 15px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -81,6 +79,14 @@
             font-weight: bold;
         }
 
+        .max-note {
+            display: block;
+            font-size: 0.85rem;
+            color: #cc5200;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
         .total-price {
             display: block;
             font-size: 2.5rem;
@@ -89,7 +95,6 @@
             margin-top: 20px;
         }
 
-        /* --- BUTTON --- */
         .cta-button {
             background-color: var(--primary-orange);
             color: var(--white);
@@ -114,29 +119,27 @@
             margin-top: 40px;
             font-size: 0.9rem;
             color: #999;
-            letter-spacing: 0.5px;
         }
 
-        .paw-icon {
-            color: var(--primary-orange);
-        }
+        .paw-icon { color: var(--primary-orange); }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>Webkitten <span class="paw-icon">🐾</span></h1>
-        <p class="subtitle">Get your dream website for only €1 per page!</p>
+        <p class="subtitle">Custom websites for just €1 per page.</p>
         
         <div class="calculator">
-            <label for="pageInput">Number of pages:</label>
-            <input type="number" id="pageInput" value="1" min="1" oninput="updatePrice()">
+            <label for="pageInput">How many pages?</label>
+            <input type="number" id="pageInput" value="1" min="1" max="10" oninput="updatePrice()">
+            <span class="max-note">(Maximum 10 pages)</span>
             
             <div class="total-price" id="displayPrice">Total: €1</div>
         </div>
 
         <a href="#" id="orderBtn" class="cta-button">
-            Order Now
+            Request Website
         </a>
     </div>
 
@@ -152,32 +155,31 @@
             
             let val = input.value;
             
-            // Zorg dat het getal niet onder de 1 komt
-            if (val < 1 && val !== "") {
+            // Controleer of het getal niet boven de 10 of onder de 1 komt
+            if (val > 10) {
+                val = 10;
+                input.value = 10;
+            } else if (val < 1 && val !== "") {
                 val = 1;
                 input.value = 1;
             }
 
-            // Berekening: 1 euro per pagina
             const total = val * 1;
-            
-            // Update display
             display.innerText = "Total: €" + (val === "" ? "0" : total);
             
-            // Update Mail Link
+            // Mail link update
             const email = "littendekitten@gmail.com";
             const subject = encodeURIComponent("Webkitten Order: " + val + " page(s)");
             const body = encodeURIComponent(
                 "Hello Webkitten!\n\n" +
                 "I would like to order a website with " + val + " page(s).\n" +
                 "The total price is €" + total + ".\n\n" +
-                "Here is my idea for the website:\n[Type your ideas here]"
+                "Ideas for my website:\n[Please describe your site here]"
             );
             
             btn.href = "mailto:" + email + "?subject=" + subject + "&body=" + body;
         }
 
-        // Run direct om de knop te activeren bij het laden
         updatePrice();
     </script>
 
