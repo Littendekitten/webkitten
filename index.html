@@ -42,7 +42,6 @@
         h1 { color: var(--primary-orange); font-size: 2.8rem; margin: 0 0 10px 0; font-weight: 900; }
         .subtitle { font-size: 1.1rem; margin-bottom: 25px; color: #555; }
 
-        /* Form styling */
         .input-group {
             background: #fffbf5;
             padding: 20px;
@@ -52,9 +51,9 @@
             text-align: left;
         }
 
-        label { display: block; font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; color: var(--dark-orange); }
+        label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 0.85rem; text-transform: uppercase; color: var(--dark-orange); }
         
-        input[type="number"], textarea {
+        input[type="number"], input[type="email"], textarea {
             width: 100%;
             padding: 12px;
             border: 2px solid var(--primary-orange);
@@ -63,13 +62,14 @@
             font-size: 1rem;
             outline: none;
             box-sizing: border-box;
+            margin-bottom: 15px;
             transition: border-color 0.2s;
         }
 
-        input[type="number"]:focus, textarea:focus { border-color: var(--dark-orange); }
+        input:focus, textarea:focus { border-color: var(--dark-orange); background-color: #fff; }
 
-        input[type="number"] { width: 80px; text-align: center; font-weight: bold; margin-bottom: 15px; }
-        textarea { height: 100px; resize: none; }
+        input[type="number"] { width: 80px; text-align: center; font-weight: bold; }
+        textarea { height: 100px; resize: none; margin-bottom: 0; }
 
         .total-price {
             display: block;
@@ -77,14 +77,13 @@
             font-weight: 900;
             color: var(--dark-orange);
             text-align: center;
-            margin: 15px 0;
+            margin: 10px 0;
         }
 
-        /* Buttons */
         .btn {
             width: 100%;
             padding: 18px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
             border-radius: 50px;
             border: none;
@@ -107,7 +106,6 @@
 
         .btn-submit:disabled { background-color: var(--gray); opacity: 0.6; cursor: not-allowed; }
 
-        /* Stripe Section (Hidden initially) */
         #paymentSection { display: none; }
         .btn-stripe {
             background-color: var(--stripe-purple);
@@ -115,8 +113,6 @@
             box-shadow: 0 8px 20px rgba(99, 91, 255, 0.3);
             margin-top: 20px;
         }
-
-        .btn-stripe:hover { background-color: #4338ca; transform: translateY(-2px); }
 
         .success-icon { color: var(--success); font-size: 4rem; margin-bottom: 10px; }
         
@@ -130,17 +126,20 @@
     <div class="container">
         <div id="formSection">
             <h1>Webkitten 🐾</h1>
-            <p class="subtitle">Get your website for <strong>€2 per page</strong>.</p>
+            <p class="subtitle">Custom websites for <strong>€2 per page</strong>.</p>
             
             <form id="orderForm">
                 <div class="input-group">
-                    <label for="pages">1. Number of pages (Max 10)</label>
+                    <label for="pages">1. How many pages? (Max 10)</label>
                     <input type="number" id="pages" name="pages" value="1" min="1" max="10" 
                            onkeydown="return ['e', 'E', '+', '-', '.', ','].includes(event.key) ? false : true"
                            oninput="updatePrice()">
 
-                    <label for="details">2. Describe your project</label>
-                    <textarea id="details" name="details" placeholder="What kind of website do you need?" oninput="updatePrice()"></textarea>
+                    <label for="email">2. Your Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="example@mail.com" oninput="updatePrice()">
+
+                    <label for="details">3. Describe your project</label>
+                    <textarea id="details" name="details" placeholder="Tell me about your dream website..." oninput="updatePrice()"></textarea>
                     
                     <div class="total-price" id="displayPrice">Total: €2</div>
                 </div>
@@ -153,16 +152,16 @@
 
         <div id="paymentSection">
             <div class="success-icon">✓</div>
-            <h2>Details Received!</h2>
-            <p>Ready to start? Click below to pay.</p>
+            <h2>Details Sent!</h2>
+            <p>I have received your request. To start the project, please complete the payment.</p>
             <div class="total-price" id="finalPrice">€2</div>
             
             <a href="HIER_JOUW_STRIPE_LINK" id="stripeLink" class="btn btn-stripe">
                 Pay with Stripe
             </a>
             
-            <p style="font-size: 0.8rem; margin-top: 20px; color: #666; line-height: 1.4;">
-                Please ensure the <strong>quantity</strong> on the Stripe checkout page matches the number of pages you selected.
+            <p style="font-size: 0.8rem; margin-top: 20px; color: #666;">
+                Don't forget to set the <strong>quantity</strong> to the correct number of pages on the Stripe page!
             </p>
         </div>
 
@@ -173,31 +172,37 @@
 
     <script>
         function updatePrice() {
-            const pages = document.getElementById('pages');
-            const details = document.getElementById('details');
+            const pagesInput = document.getElementById('pages');
+            const emailInput = document.getElementById('email');
+            const detailsInput = document.getElementById('details');
             const submitBtn = document.getElementById('submitBtn');
             const display = document.getElementById('displayPrice');
             
-            // Limit to 10
-            if (pages.value > 10) pages.value = 10;
-            if (pages.value < 1 && pages.value !== "") pages.value = 1;
+            let pVal = pagesInput.value;
+            if (pVal > 10) { pVal = 10; pagesInput.value = 10; }
+            if (pVal < 1 && pVal !== "") { pVal = 1; pagesInput.value = 1; }
 
-            const total = pages.value * 2;
-            display.innerText = "Total: €" + (pages.value === "" ? "0" : total);
+            const total = pVal * 2;
+            display.innerText = "Total: €" + (pVal === "" ? "0" : total);
 
-            // Enable button if details are provided (min 5 chars)
-            submitBtn.disabled = details.value.trim().length < 5;
+            // Check of alles is ingevuld
+            const emailValid = emailInput.value.includes('@') && emailInput.value.length > 5;
+            const detailsValid = detailsInput.value.trim().length > 5;
+
+            submitBtn.disabled = !(emailValid && detailsValid && pVal > 0);
         }
 
         async function sendData() {
             const submitBtn = document.getElementById('submitBtn');
             const pages = document.getElementById('pages').value;
+            const email = document.getElementById('email').value;
             const details = document.getElementById('details').value;
 
             submitBtn.innerText = "Sending...";
             submitBtn.disabled = true;
 
             const formData = new FormData();
+            formData.append('Email', email);
             formData.append('Pages', pages);
             formData.append('Project Details', details);
             formData.append('Total Price', '€' + (pages * 2));
@@ -210,17 +215,16 @@
                 });
 
                 if (response.ok) {
-                    // Show Payment Section
                     document.getElementById('formSection').style.display = 'none';
                     document.getElementById('paymentSection').style.display = 'block';
                     document.getElementById('finalPrice').innerText = "Total: €" + (pages * 2);
                 } else {
-                    alert("Something went wrong. Please try again.");
+                    alert("Submission failed. Please check your fields.");
                     submitBtn.innerText = "Submit Project Details";
                     submitBtn.disabled = false;
                 }
             } catch (error) {
-                alert("Could not connect to the server.");
+                alert("Connection error.");
                 submitBtn.innerText = "Submit Project Details";
                 submitBtn.disabled = false;
             }
