@@ -95,11 +95,6 @@
             box-sizing: border-box;
         }
 
-        textarea:focus {
-            border-color: var(--dark-orange);
-            background-color: #fff;
-        }
-
         .max-note {
             font-size: 0.8rem;
             color: #cc5200;
@@ -120,34 +115,43 @@
             background-color: var(--primary-orange);
             color: var(--white);
             text-decoration: none;
-            padding: 18px 40px;
-            font-size: 1.3rem;
+            padding: 16px 30px;
+            font-size: 1.2rem;
             font-weight: bold;
             border-radius: 50px;
             transition: all 0.3s ease;
             display: inline-block;
-            box-shadow: 0 8px 20px rgba(255, 103, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(255, 103, 0, 0.2);
             width: 85%;
-            cursor: pointer;
+            margin-top: 10px;
         }
 
-        /* Styling voor als de knop uitstaat */
         .cta-button.disabled {
             background-color: var(--gray);
             box-shadow: none;
             opacity: 0.6;
-            pointer-events: none; /* Maakt de link onklikbaar */
+            pointer-events: none;
         }
 
         .cta-button:not(.disabled):hover {
             background-color: var(--dark-orange);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 25px rgba(255, 103, 0, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 103, 0, 0.3);
+        }
+
+        .stripe-btn {
+            background-color: #635bff; /* Stripe Paars */
+            margin-top: 15px;
+        }
+
+        .stripe-btn:not(.disabled):hover {
+            background-color: #4338ca;
+            box-shadow: 0 12px 25px rgba(99, 91, 255, 0.3);
         }
 
         .footer {
             margin-top: 40px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #999;
         }
 
@@ -174,7 +178,11 @@
         </div>
 
         <a href="#" id="orderBtn" class="cta-button disabled">
-            Request Website
+            Send Project Details
+        </a>
+
+        <a href="#" id="stripeBtn" target="_blank" class="cta-button stripe-btn disabled">
+            Pay with Stripe
         </a>
     </div>
 
@@ -187,45 +195,47 @@
             const pageInput = document.getElementById('pageInput');
             const descInput = document.getElementById('projectDescription');
             const display = document.getElementById('displayPrice');
-            const btn = document.getElementById('orderBtn');
+            const orderBtn = document.getElementById('orderBtn');
+            const stripeBtn = document.getElementById('stripeBtn');
             
             let pages = pageInput.value;
             let description = descInput.value;
             
-            // Limit check
-            if (pages > 10) {
-                pages = 10;
-                pageInput.value = 10;
-            } else if (pages < 1 && pages !== "") {
-                pages = 1;
-                pageInput.value = 1;
-            }
+            if (pages > 10) { pages = 10; pageInput.value = 10; }
+            if (pages < 1 && pages !== "") { pages = 1; pageInput.value = 1; }
 
-            // Update Prijs
             const total = pages * 2;
             display.innerText = "Total: €" + (pages === "" ? "0" : total);
             
-            // Controleer of er tekst is ingevuld
-            if (description.trim().length > 5) { // Minimaal 5 tekens
-                btn.classList.remove('disabled');
+            // VERGEET HIERONDER NIET JE EIGEN STRIPE LINK TE PLAKKEN!
+            const stripeLink = "HIER_JOUW_STRIPE_LINK";
+            
+            if (description.trim().length > 5) {
+                orderBtn.classList.remove('disabled');
+                stripeBtn.classList.remove('disabled');
                 
-                // Mail link setup
+                // Mail setup
                 const email = "littendekitten@gmail.com";
                 const subject = encodeURIComponent("Webkitten Order: " + pages + " page(s)");
                 const body = encodeURIComponent(
                     "Hello Webkitten!\n\n" +
-                    "I would like to order a website with " + pages + " page(s).\n" +
+                    "I want to order " + pages + " page(s).\n" +
                     "Total price: €" + total + ".\n\n" +
-                    "Project Idea:\n" + description
+                    "Project Idea:\n" + description + "\n\n" +
+                    "[I will now click the Stripe button to pay!]"
                 );
-                btn.href = "mailto:" + email + "?subject=" + subject + "&body=" + body;
+                orderBtn.href = "mailto:" + email + "?subject=" + subject + "&body=" + body;
+                
+                // Stripe Link setup
+                stripeBtn.href = stripeLink;
             } else {
-                btn.classList.add('disabled');
-                btn.href = "#";
+                orderBtn.classList.add('disabled');
+                stripeBtn.classList.add('disabled');
+                orderBtn.href = "#";
+                stripeBtn.href = "#";
             }
         }
 
-        // Init op load
         updatePrice();
     </script>
 
